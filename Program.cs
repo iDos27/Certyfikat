@@ -1,63 +1,182 @@
-﻿bool validEntry = false;
+﻿// the ourAnimals array will store the following: 
+string animalSpecies = "";
+string animalID = "";
+string animalAge = "";
+string animalPhysicalDescription = "";
+string animalPersonalityDescription = "";
+string animalNickname = "";
 
-int number;
-Console.WriteLine("Enter a number between 5 and 10:");
-do
+// variables that support data entry
+int maxPets = 8;
+string? readResult;
+string menuSelection = "";
+
+// array used to store runtime data, there is no persisted data
+string[,] ourAnimals = new string[maxPets, 6];
+
+// create some initial ourAnimals array entries
+for (int i = 0; i < maxPets; i++)
 {
-    number = Convert.ToInt32(Console.ReadLine());
-    if (number >= 5 && number <= 10)
+    switch (i)
     {
-        validEntry = true;
+        case 0:
+            animalSpecies = "dog";
+            animalID = "d1";
+            animalAge = "2";
+            animalPhysicalDescription = "medium sized cream colored female golden retriever weighing about 65 pounds. housebroken.";
+            animalPersonalityDescription = "loves to have her belly rubbed and likes to chase her tail. gives lots of kisses.";
+            animalNickname = "lola";
+            break;
+        case 1:
+            animalSpecies = "dog";
+            animalID = "d2";
+            animalAge = "9";
+            animalPhysicalDescription = "large reddish-brown male golden retriever weighing about 85 pounds. housebroken.";
+            animalPersonalityDescription = "loves to have his ears rubbed when he greets you at the door, or at any time! loves to lean-in and give doggy hugs.";
+            animalNickname = "loki";
+            break;
+        case 2:
+            animalSpecies = "cat";
+            animalID = "c3";
+            animalAge = "1";
+            animalPhysicalDescription = "small white female weighing about 8 pounds. litter box trained.";
+            animalPersonalityDescription = "friendly";
+            animalNickname = "Puss";
+            break;
+        case 3:
+            animalSpecies = "cat";
+            animalID = "c4";
+            animalAge = "?";
+            animalPhysicalDescription = "";
+            animalPersonalityDescription = "";
+            animalNickname = "";
+            break;
+        default:
+            animalSpecies = "";
+            animalID = "";
+            animalAge = "";
+            animalPhysicalDescription = "";
+            animalPersonalityDescription = "";
+            animalNickname = "";
+            break;
     }
-    else
-    {
-        Console.WriteLine("Your input is invalid. Please try again.");
-    }
-} while (validEntry == false);
-Console.WriteLine($"Number:{number}. Power of 2 is {Math.Pow(number, 2)}");
-
-// Pisanie kodu weryfikujacy dane
-// Uzywanie Trim(), ToLower()
-// String musi zawierac opcje: Administrator, Manager albo User.
-string? name;
-validEntry = false;
-Console.WriteLine("Enter your role name (Administrator, Manager or User)");
-do
-{
-    name = Console.ReadLine();
-    if (name != null)
-    {
-        var lower = name.Trim().ToLower();
-        if (lower == "admin" || lower == "manager" || lower == "user")
-        {
-            Console.WriteLine($"Your value ({lower}) has been accepted.");
-            validEntry = true;
-        }
-        else
-        {
-            Console.WriteLine("Your input is invalid. Please try again.");
-        }
-    }
-} while (validEntry == false);
-// Zadanie 3: pisanie kodu przetwarzającego zawartość tablicy ciągów
-string[] myStrings = new string[2] { "I like pizza. I like roast chicken. I like salad", "I like all three of the menu choices" };
-
-foreach (string myString in myStrings)
-{
-    // Index pierwszej kropki
-    int periodLocation = myString.IndexOf('.');
-    string temp = myString;
-    while (periodLocation != -1)
-    {
-        //Wyodrebnienie zdania do kropki
-        string sentence = temp.Substring(0, periodLocation).TrimStart();
-        Console.WriteLine(sentence);
-        temp = temp.Remove(0, periodLocation + 1).TrimStart();
-        periodLocation = temp.IndexOf('.');
-    }
-
-    if (!string.IsNullOrWhiteSpace(temp))
-    {
-        Console.WriteLine(temp);
-    }
+    ourAnimals[i, 0] = "ID #: " + animalID;
+    ourAnimals[i, 1] = "Species: " + animalSpecies;
+    ourAnimals[i, 2] = "Age: " + animalAge;
+    ourAnimals[i, 3] = "Nickname: " + animalNickname;
+    ourAnimals[i, 4] = "Physical description: " + animalPhysicalDescription;
+    ourAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
 }
+
+// display the top-level menu options
+do
+{
+    Console.Clear();
+
+    Console.WriteLine("Welcome to the Contoso PetFriends app. Your main menu options are:");
+    Console.WriteLine(" 1. List all of our current pet information");
+    Console.WriteLine(" 2. Add a new animal friend to the ourAnimals array");
+    Console.WriteLine(" 3. Ensure animal ages and physical descriptions are complete");
+    Console.WriteLine(" 4. Ensure animal nicknames and personality descriptions are complete");
+    Console.WriteLine(" 5. Edit an animal’s age");
+    Console.WriteLine(" 6. Edit an animal’s personality description");
+    Console.WriteLine(" 7. Display all cats with a specified characteristic");
+    Console.WriteLine(" 8. Display all dogs with a specified characteristic");
+    Console.WriteLine();
+    Console.WriteLine("Enter your selection number (or type Exit to exit the program)");
+
+    readResult = Console.ReadLine();
+    if (readResult != null)
+    {
+        menuSelection = readResult.ToLower();
+    }
+
+    //Console.WriteLine($"You selected menu option {menuSelection}.");
+    //Console.WriteLine("Press the Enter key to continue");
+
+    // pause code execution
+    //readResult = Console.ReadLine();
+    switch (menuSelection)
+    {
+        case "1":
+            // List all of our current pet information
+            for (int i = 0; i < maxPets - 1; i++)
+            {
+                if (ourAnimals[i, 0] != "ID #: ")
+                {
+                    Console.WriteLine();
+                    for (int j = 1; j < 6; j++)
+                    {
+                        Console.WriteLine(ourAnimals[i, j]);
+                    }
+                }
+                
+            }
+            Console.WriteLine("Press any key to continue");
+            readResult = Console.ReadLine();
+            break;
+        case "2":
+            // Add a new animal to the ourAnimals array
+            string anotherPet = "y";
+            int petCount = 0;
+            for (int i = 0; i < maxPets - 1; i++)
+            {
+                if (ourAnimals[i, 0] != "ID $: ")
+                {
+                    petCount++;
+                }
+            }
+
+            if (petCount < maxPets)
+            {
+                Console.WriteLine($"We currently have {petCount} pets that need homes. We can manage {(maxPets - petCount)} more.");
+            }
+
+            while (anotherPet == "y" && petCount < maxPets)
+            {
+                petCount++;
+            }
+
+            Console.WriteLine("Press any key to continue");
+            readResult = Console.ReadLine();
+            break;
+        case "3":
+            // Ensure animal ages and physical descriptions are complete;
+            Console.WriteLine("Challenge Project - please check back soon to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
+            break;
+        case "4":
+            // Ensure animal nicknames and personality descriptions are complete
+            Console.WriteLine("Challenge Project - please check back soon to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
+            break;
+        case "5":
+            // Edit an animal’s age
+            Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
+            break;
+        case "6":
+            // Edit an animal’s personality description
+            Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
+            break;
+        case "7":
+            // Display all cats with a specified characteristic
+            Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
+            break;
+        case "8":
+            // Display all dogs with a specified characteristic
+            Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
+            break;
+        default:
+            break;
+    }
+}while (readResult != "exit");
