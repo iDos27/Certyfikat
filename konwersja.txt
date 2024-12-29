@@ -1,0 +1,53 @@
+﻿int myInt = 3;
+Console.WriteLine($"int:        {myInt}");
+decimal myDecimal = myInt;
+Console.WriteLine($"decimal:    {myDecimal}");
+Console.WriteLine("#############################");
+
+myDecimal = 3.14m;
+Console.WriteLine($"decimal:    {myDecimal}");
+myInt = (int)myDecimal;
+Console.WriteLine($"int:        {myInt}");
+Console.WriteLine("############################");
+
+myDecimal = 1.23456789m;
+float myFloat = (float)myDecimal;
+Console.WriteLine($"decimal:    {myDecimal}");
+Console.WriteLine($"float:      {myFloat}");
+Console.WriteLine("#############################");
+
+int first = 5;
+int second = 7;
+string message = first.ToString() + second.ToString();
+Console.WriteLine(message);
+Console.WriteLine("#############################");
+
+string sFirst = "5";
+string sSecond = "7";
+int sum = int.Parse(sFirst) + int.Parse(sSecond);
+Console.WriteLine($"int.Parse:  {sum}");
+Console.WriteLine("#############################");
+
+int result = Convert.ToInt32(sFirst) + Convert.ToInt32(sSecond);
+Console.WriteLine($"Convert.ToInt32:    {result}");
+Console.WriteLine("#############################");
+
+int value = (int)1.5m; // casting truncates
+Console.WriteLine($"Rzutowanie (1.5): {value}");
+
+int value2 = Convert.ToInt32(1.5m); // converting rounds up
+Console.WriteLine($"Konwersja (1.5): {value2}");
+Console.WriteLine("#############################");
+
+string svalue = "102";
+result = 0;
+if (int.TryParse(svalue, out result))
+{
+    Console.WriteLine($"Konwersja (102): {result}");
+}
+else
+{
+    Console.WriteLine("Unable to report the measurement.");
+}
+Console.WriteLine($"Measurement (w/offset): {50 + result}");
+Console.WriteLine("#############################");
